@@ -5,19 +5,21 @@
 
 // });
 
+if (sessionStorage.getItem("Email") != null && sessionStorage.getItem("Contraseña") != null) {
+    window.location.href = "index.html";
+}
+
+
 document.getElementById("SubmitButton").addEventListener("click", DatosUsuario); 
-// document.getElementById("SubmitButton").addEventListener("click", GoToIndex); //
 
-
-// function GoToIndex() {
-//     if (sessionStorage.getItem("Email") != null && document.getElementById("inputEmail").checkValidity()) {
-//         //window.location.href ='index.html';
+ /* function GoToIndex() {
+     // if (sessionStorage.getItem("Email") != null && document.getElementById("inputEmail").checkValidity()) {
+         window.location.href ="index.html";
         
-//     }
-// }
+     }
+ } */
 
-
-function DatosUsuario() {
+ function DatosUsuario() {
     var usuario = document.getElementById("inputEmail").value;
     var contra = document.getElementById("inputPassword").value;
     sessionStorage.setItem("Email", usuario);
