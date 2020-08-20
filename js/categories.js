@@ -134,3 +134,5 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 });
+
+document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
