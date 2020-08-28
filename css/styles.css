@@ -139,3 +139,8 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.buscador {
+  font-weight: bold;
+  font-size: large;
+}

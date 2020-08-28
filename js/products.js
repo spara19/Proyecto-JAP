@@ -42,6 +42,7 @@ function sortproducts(criteria, array){
     return result;
 }
 
+
 function showproductsList(){
 
     let htmlContentToAppend = "";
@@ -142,6 +143,34 @@ document.addEventListener("DOMContentLoaded", function(e){
         showproductsList();
     });
 });
+
+////////////
+function buscar() {
+    texto = document.getElementById("search").value.toLowerCase();
+    lista = [];
+
+    for (let products of productsArray) {
+        nombre = products.name.toLowerCase();
+        descripcion = products.description.toLowerCase();
+        
+        if ((nombre.indexOf(texto) !== -1) || (descripcion.indexOf(texto) !== -1)) {
+            lista.push (products);
+        }
+    }
+        if (lista.length == 0) {
+            document.getElementById("products").innerHTML = "No hay elementos que coincidan con su búsqueda :("
+        }
+
+
+    currentproductsArray = lista  
+    showproductsList()
+
+}
+document.getElementById("search").addEventListener("keyup", buscar) 
+
+////////////
+
+
 
 
 
