@@ -144,7 +144,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 });
 
-////////////
+///////////////////////
+// Barra de búsqueda //
+///////////////////////
 function buscar() {
     texto = document.getElementById("search").value.toLowerCase();
     lista = [];
@@ -168,10 +170,8 @@ function buscar() {
 }
 document.getElementById("search").addEventListener("keyup", buscar) 
 
-////////////
-
-
-
+/////////////////////  
+/////////////////////
 
 
 document.addEventListener("DOMContentLoaded", function (e) {
