@@ -144,11 +144,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 });
 
-///////////////////////
-// Barra de búsqueda //
-///////////////////////
+////////////
 function buscar() {
-    texto = document.getElementById("search").value.toLowerCase();
+    texto = document.getElementById("searchBar").value.toLowerCase();
     lista = [];
 
     for (let products of productsArray) {
@@ -168,10 +166,12 @@ function buscar() {
     showproductsList()
 
 }
-document.getElementById("search").addEventListener("keyup", buscar) 
+document.getElementById("searchBar").addEventListener("keyup", buscar) 
 
-/////////////////////  
-/////////////////////
+////////////
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", function (e) {
