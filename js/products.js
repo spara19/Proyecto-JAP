@@ -158,7 +158,7 @@ function buscar() {
         }
     }
         if (lista.length == 0) {
-            document.getElementById("products").innerHTML = "No hay elementos que coincidan con su búsqueda :("
+            document.getElementById("products").innerHTML = "<p class='noResultFound' >" + "No hay elementos que coincidan con su búsqueda :(" + "</p>"
         }
 
 

@@ -157,3 +157,8 @@ a.custom-card:hover {
   background-repeat: no-repeat;
   padding: 12px 20px 12px 50px;
 }
+
+.noResultFound {
+  font-size: larger;
+  font-style: italic;
+}
