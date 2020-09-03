@@ -3,5 +3,4 @@
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
 
-document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
 });

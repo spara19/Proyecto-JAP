@@ -26,14 +26,39 @@
       <a id="nombreMail" class="py-2 d-none d-md-inline-block" href=""></a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
+<div class="container">
+  <div id="info">
   </div>
+
+  <div id="gallery">
+  </div>
+
+  <div id="related_products">
+  </div>
+  
+  <div id="comments">
+  </div>
+
+  <div id="new_comment">
+    <h4>¡Valora el producto y deja un comentario!</h4>
+    <div >
+      <p>Valoración: <select name="puntuacion" id="puntaje" >
+          <option value="" disabled selected hidden>--- </option>
+          <option value="1">1 estrella</option>
+          <option value="2">2 estrellas</option>
+          <option value="3">3 estrellas</option>
+          <option value="4">4 estrellas</option>
+          <option value="5">5 estrellas</option>
+      </select></p>
+      <p><br><textarea name="mensaje" id="mensaje" cols="50" rows="6" placeholder="Deja tu comentario del producto aquí..." required></textarea>
+      <input type="submit" id="submitComment"></p>
+    </div>
+
+
+
+  </div>
+</div>
+  
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">

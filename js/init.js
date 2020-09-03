@@ -44,4 +44,17 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  ////// Ir al login //////
+  
+  function gotoLogin() {
+    if ((sessionStorage.getItem("Email") === null && sessionStorage.getItem("Contraseña") === null) && (window.location.href.split("/").pop() !== "login.html"))  {
+        window.location.href = "login.html";    
+    }
+  }
+  gotoLogin();
+  
+  /////// Nombre de usuario //////
+  document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
+
+
 });

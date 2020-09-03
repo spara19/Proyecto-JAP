@@ -2,7 +2,6 @@
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 
-document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
 
 ////////////////////////////
 const ORDER_ASC_BY_PRICE = "AZ";
@@ -53,7 +52,7 @@ function showproductsList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
 
                 htmlContentToAppend += `
-                <div class="list-group-item list-group-item-action">
+                <a href="product-info.html" class="list-group-item list-group-item-action">
                     <div class="row">
                         <div class="col-3">
                             <img src="` + product.imgSrc + `" alt="` + product.desc + `" class="img-thumbnail">
@@ -67,7 +66,7 @@ function showproductsList(){
                                 <p style="text-align:right;"> ${product.currency} ${product.cost}</p>
                         </div>
                     </div>
-                </div>
+                </a>
                 `
         }
 

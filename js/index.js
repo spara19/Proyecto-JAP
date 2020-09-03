@@ -5,7 +5,6 @@ function gotoLogin() {
 }
 gotoLogin();
 
-document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
 
 
     
