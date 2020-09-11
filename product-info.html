@@ -13,6 +13,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/w3.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,24 +27,64 @@
       <a id="nombreMail" class="py-2 d-none d-md-inline-block" href=""></a>
     </div>
   </nav>
-<div class="container">
-  <div id="info">
+<!-- Nombre del producto -->
+<div class="container" id="nombreProducto">
+</div>
+<br>
+<!-- CONTENEDOR SUPERIOR-->
+<div class="container fijo">
+<!-- CARRUSEL DE IMAGENES -->
+  <div class="izquierda">
+    <div class="w3-content" id="gallery" style="width:650px; height: 450px;">
+    </div>
+    <div class="w3-center" id="botonesDireccion">
+          <div class="w3-section">
+            <button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>
+            <button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next ❯</button>
+          </div>
+    </div>
   </div>
+<!-- Contenedor de Precio, Articulos vendidos y Promedio  -->
+  <div class="derecha">
+    <div class="horizontal">
+      <div id="promedio"></div>
+      <div id="sold" class="text-muted centrar"></div>
+      <div id="numeroComentarios" class="text-muted centrar"></div>  
+    </div>
+    <div class="precio">
+      <div id="precio"></div>
+      <div class="centrar">
+          <button type="button" class="btn btn-primary btn-lg">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+<!-- Contenedor de Descripcion y Comentarios  -->
 
-  <div class="row text-center text-lg-left pt-2" id="gallery">
-  </div>
+<!--  -->
+<!-- INFORMACION GENERAL DEL PRODUCTO -->
+<div class="container borde" id="info">
+</div>
+<!--  -->
+<hr>
+<div class="container">
+<!-- ARTICULOS RELACIONADOS  -->
 <div>
-  <h4>También te puede interesar... </h4>
+  <h3>También te puede interesar... </h3>
   <div class="row text-center text-lg-left pt-2" id="related_products">
   </div>
 </div>
-  
+<hr><br>
+<!--  -->
+<!-- COMENTARIOS DE USUARIOS --> 
 <div>
-  <div id="promedio"></div>
-  <h4>Opiniones sobre el producto</h4> 
+  <h2>Opiniones de compradores</h2> <br>
   <div id="comments">
   </div>
 </div>
+<!--  -->
+<!-- Espacio reservado para mandar un nuevo comentario -->
   <div id="new_comment">
     <h4>¡Valora el producto y deja un comentario!</h4>
     <div >
@@ -56,13 +97,13 @@
           <option value="5">5 estrellas</option>
       </select></p>
       <p><br><textarea name="mensaje" id="mensaje" cols="50" rows="6" placeholder="Deja tu comentario del producto aquí..." required></textarea>
-      <input type="submit" id="submitComment"></p>
+        <br>
+        <br>
+      <input type="submit" id="submitComment" value="Enviar comentario"></p>
     </div>
-
-
-
   </div>
 </div>
+<!--  -->
   
   <footer class="text-muted">
     <div class="container">

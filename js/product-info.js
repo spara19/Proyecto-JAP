@@ -11,16 +11,18 @@ function showproductInfo(){
 
                 htmlContentToAppend = `
                 <div>
-                <div class="text-center p-4"> <h1>${product_info.name}</h1> </div>
-                <div> ${product_info.description} </div>
-                <div> Categoría: ${product_info.category}
-                <div> Precio: ${product_info.currency} ${product_info.cost}</div>
-                <div> Articulos vendidos: ${product_info.soldCount} </div>
-                <div></div>
+                <div class="description"> ${product_info.description} </div>
+                <br>
+                    <div> <div style="text-decoration: underline;">Informacioón general:</div>
+                    Nombre: ${product_info.name}<br>  Categoría: ${product_info.category}<br>  Precio: ${product_info.currency}${product_info.cost} 
+                    </div>
                 </div>
                 `
 
         document.getElementById("info").innerHTML = htmlContentToAppend;
+        document.getElementById("nombreProducto").innerHTML = `<br><div class="text-center p-4" style="font-size: 3.5em;">${product_info.name}</div>`
+        document.getElementById("precio").innerHTML = `<div class="text-center p-4"> <div style="font-size: 2.5em;">${product_info.currency} ${product_info.cost}</div> </div>`
+        document.getElementById("sold").innerHTML = `Artículos vendidos: ${product_info.soldCount}`;
 }
 
 ////////////////////////////////////////////
@@ -29,20 +31,19 @@ function showproductInfo(){
 
 function showproductGallery(array) {
     let htmlImgToAppend = "";
+    let htmlControlesToAppend = "";
 
     for(let i = 0; i < array.length; i++){
         let imageSrc = array[i];
 
         htmlImgToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
-            </div>
-        </div>
+        <img class="mySlides" src="${imageSrc}" style="width:100%; height: 100%;">
         `
+        htmlControlesToAppend += `<button class="w3-button demo" onclick="currentDiv(${i+1})">${i+1}</button> `
 
-        document.getElementById("gallery").innerHTML = htmlImgToAppend;
     }
+    document.getElementById("gallery").innerHTML += htmlImgToAppend;
+    document.getElementById("botonesDireccion").innerHTML += htmlControlesToAppend;
 }
 
 /// Mostrar productos relacionados /// 
@@ -86,7 +87,7 @@ function stars (array) {
 ///////// Mostrar comentarios /////////////
 
 function showComments(array) {
-    document.getElementById("promedio").innerHTML = starsN(promedio(array));          /// Doy un valor al promedio ///
+    document.getElementById("promedio").innerHTML = `<div class="promedio">${promedio(array)}<br>${starsN(promedio(array))}</div>`;          /// Doy un valor al promedio ///
     let htmlcommentsToAppend = "";
 
     for(let i = 0; i < array.length; i++){
@@ -94,14 +95,15 @@ function showComments(array) {
 
         htmlcommentsToAppend += `
         <div> <strong> ${comments.user.replace("_", " ")} </strong></div> 
-        <div> ${ stars(comments)}
-        <div> ${comments.description} </div>
+        <div> ${ stars(comments)}</div>
+        <div> ${comments.description} </div> 
         <small class="text-muted"> ${comments.dateTime} </small>
         <br><hr>
         `
         
 
         document.getElementById("comments").innerHTML = htmlcommentsToAppend;
+        document.getElementById("numeroComentarios").innerHTML = `Valoraciones: ${array.length}`
     }
     
 }
@@ -119,6 +121,9 @@ document.addEventListener("DOMContentLoaded", function(e){
             showproductInfo();
             showproductGallery(product_info.images);
             var relatedProductsIndex = product_info.relatedProducts
+            
+
+showDivs(slideIndex);
 
             getJSONData(PRODUCTS_URL).then(function(resultObj){
                 if (resultObj.status === "ok")
@@ -138,29 +143,6 @@ document.addEventListener("DOMContentLoaded", function(e){
                 showComments(comments_info);
              }
          })
-        
-              
-              
-
-
-
-            /*
-            
-            let categoryNameHTML  = document.getElementById("categoryName");
-            let categoryDescriptionHTML = document.getElementById("categoryDescription");
-            let productCountHTML = document.getElementById("productCount");
-            let productCriteriaHTML = document.getElementById("productCriteria");
-        
-            categoryNameHTML.innerHTML = category.name;
-            categoryDescriptionHTML.innerHTML = category.description;
-            productCountHTML.innerHTML = category.productCount;
-            productCriteriaHTML.innerHTML = category.productCriteria;
-
-            //Muestro las imagenes en forma de galería
-            showImagesGallery(category.images);
-         
-            */
-
 });   
 
 /////////////// Obtener fecha y hora actual ///////
@@ -172,7 +154,7 @@ function currentDate() {
     var yyyy = today.getFullYear();
     var hh = today.getHours();
     var min = ('0' + today.getMinutes()).slice(-2);
-    var ss = today.getSeconds();
+    var ss = ('0' + today.getSeconds()).slice(-2);
 
     today = yyyy + '-' + mm + '-' + dd + '  ' + hh + ':' + min + ':' + ss ;
     return today
@@ -236,8 +218,8 @@ if (sessionStorage.getItem("comentarioH") < 1) {
         <small class="text-muted"> ${currentDate()}</small>
         <br><hr>
         `
-
-        document.getElementById("promedio").innerHTML = starsN(promedio(comments_info));        /// Modifico el promedio de volaroacion /// 
+        nuevoPromedio = promedio(comments_info)
+        document.getElementById("promedio").innerHTML = `<div class="promedio">${nuevoPromedio}<br>${starsN(nuevoPromedio)}</div>`;        /// Modifico el promedio de volaroacion /// 
     }
     else {
         alert("Por favor, ingrese un puntaje")
@@ -247,9 +229,10 @@ if (sessionStorage.getItem("comentarioH") < 1) {
 else {
     alert("Ya ha realizado un comentario para este producto")
 }
+document.getElementById("numeroComentarios").innerHTML = `Valoraciones: ${comments_info.length+1}`   /// Modificar el numero de valoraciones totales ///
 }
 
-document.getElementById("submitComment").addEventListener("click", newComment); 
+document.getElementById("submitComment").addEventListener("click", newComment);     /// Invocar a la función de NewComment ///
 
 
 
@@ -272,6 +255,32 @@ function promedio(array) {
     return promedioT;
 }
 
+////////////////////////////////////////////////
+///// Parte dedicada a carrusel de imagenes ////
+var slideIndex = 1;
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" w3-red", "");
+  }
+  x[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " w3-red";
+}
 
 
 

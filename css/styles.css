@@ -162,3 +162,69 @@ a.custom-card:hover {
   font-size: larger;
   font-style: italic;
 }
+
+.description {
+  font-size: 1.30em;
+  line-height: 1.8;
+}
+
+
+.izquierda {
+  padding-top: 2%;
+  width: 65%;
+  float: left;
+  height: 100%;
+  border-right: 2px solid #ccc;
+}
+
+.derecha {
+  padding-top: 2%;
+  width: 35%;
+  float: right;
+  height: 100%;
+}
+
+.fijo {
+  height: 600px;
+  border: 2px solid #ccc;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+
+}
+
+.promedio {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+  line-height: 200%;
+  padding-top: 10%;
+}
+
+.centrar {
+  text-align: center;
+}
+
+.horizontal {
+  width: 200px;
+  height: auto;
+  margin: 0 auto;
+  padding: 0px;
+  position: relative;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+}
+
+.precio {
+  padding-top: 30%;
+}
+
+.borde {
+  padding-top: 50px;
+  padding-bottom: 40px;
+  border: 2px solid #ccc;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-top: none;
+
+}
+
