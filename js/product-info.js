@@ -14,7 +14,7 @@ function showproductInfo(){
                 <div class="description"> ${product_info.description} </div>
                 <br>
                     <div> <div style="text-decoration: underline;">Informacioón general:</div>
-                    Nombre: ${product_info.name}<br>  Categoría: ${product_info.category}<br>  Precio: ${product_info.currency}${product_info.cost} 
+                    Nombre: ${product_info.name}<br>  Categoría: <a href="category-info.html" class="link";>${product_info.category}</a><br>  Precio: ${product_info.currency}${product_info.cost} <br> Artículos vendidos: ${product_info.soldCount}
                     </div>
                 </div>
                 `
@@ -200,7 +200,6 @@ sessionStorage.setItem("comentarioH", contadorcoment)
 
 function newComment() {
 
-alert(sessionStorage.getItem("comentarioH"))
 if (sessionStorage.getItem("comentarioH") < 1) {
 
     var puntaje = document.getElementById("puntaje").value;
@@ -220,6 +219,7 @@ if (sessionStorage.getItem("comentarioH") < 1) {
         `
         nuevoPromedio = promedio(comments_info)
         document.getElementById("promedio").innerHTML = `<div class="promedio">${nuevoPromedio}<br>${starsN(nuevoPromedio)}</div>`;        /// Modifico el promedio de volaroacion /// 
+        alert("¡Gracias por su comentario!")
     }
     else {
         alert("Por favor, ingrese un puntaje")

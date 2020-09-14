@@ -228,3 +228,7 @@ a.custom-card:hover {
 
 }
 
+.link {
+  color: rgb(71, 133, 158);
+  font-style: italic;
+}
