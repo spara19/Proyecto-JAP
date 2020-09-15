@@ -52,9 +52,34 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
   }
   gotoLogin();
-  
-  /////// Nombre de usuario //////
-  document.getElementById("nombreMail").innerHTML += "<b>" + sessionStorage.getItem("Email") + "</b>"
+
+  ///////////////
+/////// Nombre de usuario //////
+  document.getElementById("nombreMail").innerHTML +=  `<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${(sessionStorage.getItem("Email"))}</button>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="cart.html">Mi carrito</a>
+    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" id="cerrarSesion">Cerrar sesión</a>
+  </div>
+</div>`
 
 
 });
+/// Fijar como se ejecuta la funcion de cerrar sesion, el onload sirve para que pueda tomar la ID fijada con JS /// 
+onload = function() {
+  document.getElementById("cerrarSesion").addEventListener("click", closeSession);
+}
+
+//// Funcion de cerrar sesion, elimina los datos guardados en los sessionStorage y manda al login ///
+function closeSession() {
+  var answer = confirm("¿Quiere cerrar sesión?");
+  if (answer) {
+  sessionStorage.removeItem("Email");
+  sessionStorage.removeItem("Contraseña");
+  window.location.href = "login.html"
+}
+
+}
