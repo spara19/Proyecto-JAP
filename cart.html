@@ -44,13 +44,40 @@
     </div>
   </nav>
   <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    <div id="cart_products_ID">
     </div>
   </div>
+  <div class="container">
+  <h5 class="mb-3">Tipo de envío</h5>
+  <div class="d-block my-3">
+    <div class="custom-control custom-radio">
+      <input id="premiumradio" name="shipingType" type="radio" class="custom-control-input" value="Premium" checked="" required="">
+      <label class="custom-control-label" for="premiumradio">Premium 2 a 5 días (15%)</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="expressradio" name="shipingType" type="radio" class="custom-control-input" value="Express" required="">
+      <label class="custom-control-label" for="expressradio">Express 5 a 8 días (7%)</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="standardradio" name="shipingType" type="radio" class="custom-control-input" value="Standard" required="">
+      <label class="custom-control-label" for="standardradio">Standard 12 a 15 días (5%)</label>
+    </div>
+  </div>
+  <h5 class="mb-3">Direccióon de envío</h5>
+  <div>
+    FORMULARIO DE DIRECCION DE ENVIO
+  </div> <br>
+  <h5 class="mb-3">Costos</h5>
+  <div id="costos">
+
+  </div>
+</div>
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

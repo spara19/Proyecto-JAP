@@ -232,3 +232,43 @@ a.custom-card:hover {
   color: rgb(71, 133, 158);
   font-style: italic;
 }
+
+.articuloCarrito {
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+}
+
+.carrito_art_info {
+width: 20%;
+height: 100%;
+display: inline-block;
+text-align: center;
+}
+
+
+.costo_derecha {
+  width: 35%;
+  float: right;
+  height: 100%;
+}
+
+.costo_izquierda {
+  width: 65%;
+  float: left;
+  height: 100%;
+}
+
+.img_cart_products {
+  width: 5%;
+  height: 10%;
+  float: left;
+}
+
+.img_cart_container {
+  width: 110%;
+  height: 100%;
+  position: relative;
+  vertical-align: center;
+}
