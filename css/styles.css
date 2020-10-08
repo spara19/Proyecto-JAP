@@ -247,22 +247,47 @@ display: inline-block;
 text-align: center;
 }
 
+.p_left50 {
+  padding-left: 50px;
+}
+
+.cart_art_titles {
+  font-weight: bold;
+  font-size: large;
+}
+
+.costos {
+  border: 2px solid #ccc;
+  width: 80%;
+  height: 250px;
+}
+
+.costos_in {
+  position: relative;
+  height: 33%;
+  border-bottom: 2px solid #ccc;
+  padding-top: 10px;
+}
 
 .costo_derecha {
-  width: 35%;
+  width: 50%;
   float: right;
   height: 100%;
+  padding-left: 34%;
+
 }
 
 .costo_izquierda {
-  width: 65%;
+  width: 50%;
   float: left;
   height: 100%;
+  padding-left: 10px;
+
 }
 
 .img_cart_products {
-  width: 5%;
-  height: 10%;
+  width: 4%;
+  height: 100%;
   float: left;
 }
 
@@ -271,4 +296,25 @@ text-align: center;
   height: 100%;
   position: relative;
   vertical-align: center;
+  margin:0px 0px;
+}
+
+.shipping_adress_inputs {
+  height: 20px;
+}
+
+.shipping_adress_label {
+font-weight: normal;
+}
+
+.input_success {
+  border: 2px solid #2ecc71;
+  border-radius: 4px;
+  visibility: visible;
+}
+
+.input_error {
+  border: 2px solid #e74c3c;
+  border-radius: 4px;
+  visibility: visible;
 }

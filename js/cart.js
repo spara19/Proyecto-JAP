@@ -14,7 +14,7 @@ function showcartProducts(array) {
         <div class="img_cart_container"><img src="${cart_products.src}" class="img_cart_products"> </div>
         <div class="carrito_art_info"> ${cart_products.name}</div>
         <div class="carrito_art_info"> ${cart_products.currency}${cart_products.unitCost} </div>
-        <div class="carrito_art_info"> <input class="form-control" type="number" id="cart_${i}_units" value="${cart_products.count}" min="1" onclick="precioSubtotal(${i}); newCost()"></div>
+        <div class="carrito_art_info"> <input class="form-control" style="width: 35%; margin : 0 auto;" type="number" id="cart_${i}_units" value="${cart_products.count}" min="1" onclick="precioSubtotal(${i}); newCost()"></div>
         <div class="carrito_art_info" id="cart_${i}_cost" style="float: right;;"> <strong>UYU  ${convertir(cart_products.currency)*cart_products.count*cart_products.unitCost}</strong></div>
         </div>
         <br>
@@ -93,6 +93,11 @@ document.addEventListener("DOMContentLoaded", function(e){
            cart_products_info = resultObj.data;
            showcartProducts(cart_products_info.articles);
            showPrices(cart_products_info.articles);
+           if (localStorage.getItem("saveAdress_control") == 1) {
+            load_savedAdress()
+            alert("hola")  
+           }
+
         }
     })
 }); 
@@ -137,20 +142,30 @@ function showPrices(array) {
 
     
     htmlPricesToAppend += `
-    <div> 
-        <div>
-            <div class="costo_izquierda">Subtotal</div>
+    <div class="costos"> 
+        <div class="costos_in" >
+            <div class="costo_izquierda">
+                <div>Subtotal</div>
+                <small class="text-muted"> Suma de cantidad de productos comprados multiplicado por su respectivo precio unitario </small>
+            </div>
             <div class="costo_derecha" id="precioSubtotal">UYU ${subtotal}</div>
-        </div><br><br>
-        <div>
-            <div class="costo_izquierda">Costo de envío</div>
+        </div>
+        <div class="costos_in"> 
+            <div class="costo_izquierda">
+                <div>Costo de envío</div>
+                <small class="text-muted"> Costo de envío en función del tipo de envío elegido </small>
+            </div>
             <div class="costo_derecha" id="precioEnvio">UYU ${precioEnvio()*subtotal}</div>
-        </div><br><br>
-        <div>
-            <div class="costo_izquierda">COSTO TOTAL</div>
+        </div>
+        <div class="costos_in"> 
+            <div class="costo_izquierda">
+                <div><strong>TOTAL</strong></div>
+                <small class="text-muted"> Suma de costo subtotal más costo de envío </small>
+            </div>
             <div class="costo_derecha" id="precioTotal">UYU ${(1+precioEnvio())*subtotal}</div>
         </div>
     </div>
+    
     `
 document.getElementById("costos").innerHTML = htmlPricesToAppend;
     
@@ -168,11 +183,11 @@ function newCost() {
        let units = document.getElementById("cart_"+i+"_units").value;
        precioSubtotal += convertir(productos[i].currency)*units*productos[i].unitCost;
     }
-    precioTotal = precioSubtotal*(1+precioEnvio()).toFixed(0)
+     // precioTotal = precioSubtotal*(1+precioEnvio()).toFixed(0)
 
     document.getElementById("precioSubtotal").innerHTML = "UYU " + precioSubtotal.toFixed(0)
     document.getElementById("precioEnvio").innerHTML = "UYU " + (precioSubtotal*precioEnvio()).toFixed(0)
-    document.getElementById("precioTotal").innerHTML = "UYU " + precioTotal
+    document.getElementById("precioTotal").innerHTML = "UYU " + (precioSubtotal*(1+precioEnvio())).toFixed(0)
 
 }
 
@@ -184,3 +199,109 @@ onload = function() {
     document.getElementById("standardradio").addEventListener("click", newCost);
 
     }
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+function saveAdress() {
+    var calle = document.getElementById("calle_ID").value;
+    var esquina = document.getElementById("esquina_ID").value;
+    var numero_puerta = document.getElementById("numeroPuerta_ID").value;
+    var departamento = document.getElementById("departamento_ID").value;
+    var pais = document.getElementById("pais_ID").value;
+    var barrio = document.getElementById("barrio_ID").value;
+
+    var saveAdress_control = 1
+    localStorage.setItem("saveAdress_control", saveAdress_control)
+    
+    localStorage.setItem("calle", calle);
+    localStorage.setItem("esquina", esquina);
+    localStorage.setItem("departamento", departamento);
+    localStorage.setItem("numeroPuerta", numero_puerta);
+    localStorage.setItem("pais", pais);
+    localStorage.setItem("barrio", barrio);
+
+    alert(localStorage.getItem("calle"));
+    alert(localStorage.getItem("saveAdress_control"));
+    
+}
+
+function load_savedAdress() {
+
+    document.getElementById("calle_ID").value = localStorage.getItem("calle")
+    document.getElementById("esquina_ID").value = localStorage.getItem("esquina") 
+    document.getElementById("numeroPuerta_ID").value = localStorage.getItem("numeroPuerta")
+    document.getElementById("departamento_ID").value = localStorage.getItem("departamento")
+    document.getElementById("pais_ID").value = localStorage.getItem("pais")
+    document.getElementById("barrio_ID").value = localStorage.getItem("barrio")
+}
+
+function resetAdress() {
+    localStorage.removeItem("saveAdress_control")
+    localStorage.removeItem("calle")
+    localStorage.removeItem("esquina") 
+    localStorage.removeItem("numeroPuerta")
+    localStorage.removeItem("departamento")
+    localStorage.removeItem("pais")
+    localStorage.removeItem("barrio")
+
+    document.getElementById("calle_ID").value = "";
+    document.getElementById("esquina_ID").value = "";
+    document.getElementById("numeroPuerta_ID").value = "";
+    document.getElementById("departamento_ID").value = "";
+    document.getElementById("pais_ID").value = "";
+    document.getElementById("barrio_ID").value = "";
+
+}
+
+function paymentMethod() {
+    var values = document.getElementsByName("paymentMethod");
+
+for(var i = 0; i < values.length; i++) {
+   if(values[i].checked == true) {
+       selectedValue = values[i].value;
+   }
+ }
+ return selectedValue;
+}
+
+/// Verificar que los valores del input no estén vacios
+function checkValidation() {
+    var calle = document.getElementById("calle_ID");
+    var esquina = document.getElementById("esquina_ID");
+    var numero_puerta = document.getElementById("numeroPuerta_ID");
+    var departamento = document.getElementById("departamento_ID");
+    var pais = document.getElementById("pais_ID");
+    var barrio = document.getElementById("barrio_ID");
+    var cc_name = document.getElementById("cc-name")
+    var cc_expiration = document.getElementById("cc-expiration")
+    var cc_number = document.getElementById("cc-number")
+    var cc_cvv = document.getElementById("cc-cvv")
+    var validity = 1
+
+    var array_inputs = [calle, esquina, numero_puerta, departamento, pais, barrio];
+    var payment_inpunts = [cc_name, cc_expiration, cc_number, cc_cvv];
+    var payment_method = paymentMethod();
+
+    /// Si el método de pago es crédito o débito, que los campos de tarjeta sean obligatorios
+    if (payment_method === "credit" || payment_method ==="debit") {
+        array_inputs = array_inputs.concat(payment_inpunts);
+    } else {
+        for (let i = 0; i < payment_inpunts.length; i++)
+        payment_inpunts[i].className = "form-control";      /// En caso de cambiar a paypal, sacar recuadro a campos
+    }
+    
+    for (let i = 0; i < array_inputs.length; i++) {        ///
+    let input = array_inputs[i]
+
+    if (input.value.trim() === '') {
+        input.className = "form-control input_error";
+        validity = 0
+    } else {
+        input.className = "form-control input_success";
+    }
+
+}
+if (validity === 0) {
+    alert("Por favor, rellene los campos marcados en rojo")
+}
+}

@@ -31,6 +31,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
+  <link  href="css/w3.css" rel="stylesheet">
 </head>
 
 <body>
@@ -43,12 +44,23 @@
       <a id="nombreMail" class="py-2 d-none d-md-inline-block" href=""></a>
     </div>
   </nav>
-  <div class="container p-5">
+  <h1 class="container text-center p-4" style="font-size: 3.2em;">Carrito de Compras</h1><hr>
+  <h3 class="container mb-3">Artículos en carrito</h3> <hr>
+  <div class="container" >
+    <div class="articuloCarrito" style="border: 0px"> 
+      <div class="img_cart_container"> </div>
+      <div class="carrito_art_info p_left50 cart_art_titles"> Nombre</div>
+      <div class="carrito_art_info p_left50 cart_art_titles">Costo</div>
+      <div class="carrito_art_info p_left50 cart_art_titles" >Cantidad </div>
+      <div class="carrito_art_info cart_art_titles" style="float: right;">Subtotal </div>
+    </div>
     <div id="cart_products_ID">
     </div>
   </div>
+  <hr>
   <div class="container">
-  <h5 class="mb-3">Tipo de envío</h5>
+  <h3 class="mb-3">Tipo de envío</h3><hr>
+  <br>
   <div class="d-block my-3">
     <div class="custom-control custom-radio">
       <input id="premiumradio" name="shipingType" type="radio" class="custom-control-input" value="Premium" checked="" required="">
@@ -63,15 +75,129 @@
       <label class="custom-control-label" for="standardradio">Standard 12 a 15 días (5%)</label>
     </div>
   </div>
-  <h5 class="mb-3">Direccióon de envío</h5>
-  <div>
-    FORMULARIO DE DIRECCION DE ENVIO
-  </div> <br>
-  <h5 class="mb-3">Costos</h5>
-  <div id="costos">
+  <hr>
+  <h3 class="mb-3">Dirección de envío</h3><hr>
+  <br>
+  <!-- -->
+  <form class="needs-validation" novalidate>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="calle_ID" class="shipping_adress_label">Calle</label>
+        <input type="text" class="form-control" id="calle_ID" placeholder="Escriba aquí la calle principal" value="" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="esquina_ID" class="shipping_adress_label">Esquina</label>
+        <input type="text" class="form-control" id="esquina_ID" placeholder="Escriba aquí la esquina" value="" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="numeroPuerta_ID" class="shipping_adress_label">Número de puerta</label>
+        <input type="text" class="form-control" id="numeroPuerta_ID" placeholder="Escriba aquí el número de puerta" value="" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="departamento_ID" class="shipping_adress_label">Departamento / Estado / Provincia</label>
+        <input type="text" class="form-control" id="departamento_ID" placeholder="Departamento" required>
+        <div class="invalid-feedback">
+          Please provide a valid city.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="pais_ID" class="shipping_adress_label">País</label>
+        <input type="text" class="form-control" id="pais_ID" placeholder="País" required>
+        <div class="invalid-feedback">
+          Please provide a valid state.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="barrio_ID" class="shipping_adress_label">Barrio / Localidad</label>
+        <input type="text" class="form-control" id="barrio_ID" placeholder="Barrio" required>
+        <div class="invalid-feedback">
+          Please provide a valid zip.
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-info" type="button" id="save_adress" onclick="saveAdress()">Guardar dirección</button>
+    <button type="button" id="reset_adress" onclick="resetAdress()">Limpiar campos</button>
+  </form>
+  <hr>
+  <br>
+  <!-- -->
+  <h3 class="mb-3">Costos</h3><hr>
+  <div class="container" id="costos">
 
   </div>
+  <br>
+  <hr>
+  <div>
+    <h3 class="mb-3">Forma de pago</h3>
+    <!---->
+  <form class="needs-validation" novalidate></form>
+    <div class="d-block my-3">
+      <div class="custom-control custom-radio">
+        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="credit" checked required>
+        <label class="custom-control-label" for="credit">Tarjeta de crédito</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" value="debit" required>
+        <label class="custom-control-label" for="debit">Tarjeta de débito</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" required>
+        <label class="custom-control-label" for="paypal">Paypal</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="cc-name">Nombre en tarjeta</label>
+        <input type="text" class="form-control" id="cc-name" placeholder="" required>
+        <small class="text-muted">Nombre completa como aparece en la tarjeta</small>
+        <div class="invalid-feedback">
+          Name on card is required
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="cc-number">Número de tarjeta</label>
+        <input type="text" class="form-control" id="cc-number" placeholder="" required>
+        <div class="invalid-feedback">
+          Credit card number is required
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <label for="cc-expiration">Vencimiento</label>
+        <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+        <div class="invalid-feedback">
+          Expiration date required
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="cc-cvv">CVV</label>
+        <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+        <div class="invalid-feedback">
+          Security code required
+        </div>
+      </div>
+    </div>
+    <hr class="mb-4">
+    <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitCart" onclick="checkValidation()">Continue to checkout</button>
+  </form>
 </div>
+</div>
+
+    <!---->
+  </div>
   <footer class="text-muted bg-light">
     <div class="container">
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
