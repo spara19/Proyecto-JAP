@@ -8,12 +8,11 @@ function showcartProducts(array) {
         let cart_products = array[i];
 
 
-
         htmlProductsToAppend += `
         <div class="articuloCarrito"> 
         <div class="img_cart_container"><img src="${cart_products.src}" class="img_cart_products"> </div>
-        <div class="carrito_art_info"> ${cart_products.name}</div>
-        <div class="carrito_art_info"> ${cart_products.currency}${cart_products.unitCost} </div>
+        <div class="carrito_art_info" id="cart_${i}_name"> ${cart_products.name}</div>
+        <div class="carrito_art_info" id="cart_${i}_unitcost"> ${cart_products.currency}${cart_products.unitCost} </div>
         <div class="carrito_art_info"> <input class="form-control" style="width: 35%; margin : 0 auto;" type="number" id="cart_${i}_units" value="${cart_products.count}" min="1" onclick="precioSubtotal(${i}); newCost()"></div>
         <div class="carrito_art_info" id="cart_${i}_cost" style="float: right;;"> <strong>UYU  ${convertir(cart_products.currency)*cart_products.count*cart_products.unitCost}</strong></div>
         </div>
@@ -94,8 +93,7 @@ document.addEventListener("DOMContentLoaded", function(e){
            showcartProducts(cart_products_info.articles);
            showPrices(cart_products_info.articles);
            if (localStorage.getItem("saveAdress_control") == 1) {
-            load_savedAdress()
-            alert("hola")  
+            load_savedAdress() 
            }
 
         }
@@ -252,7 +250,7 @@ function resetAdress() {
     document.getElementById("barrio_ID").value = "";
 
 }
-
+// Tomar el método de pago elegido
 function paymentMethod() {
     var values = document.getElementsByName("paymentMethod");
 
@@ -263,7 +261,7 @@ for(var i = 0; i < values.length; i++) {
  }
  return selectedValue;
 }
-
+/////////////////////////////////////////////////////////
 /// Verificar que los valores del input no estén vacios
 function checkValidation() {
     var calle = document.getElementById("calle_ID");
@@ -276,7 +274,7 @@ function checkValidation() {
     var cc_expiration = document.getElementById("cc-expiration")
     var cc_number = document.getElementById("cc-number")
     var cc_cvv = document.getElementById("cc-cvv")
-    var validity = 1
+    var validity = 1  // Si es 1, es que todos los campos obligatorios estan llenos
 
     var array_inputs = [calle, esquina, numero_puerta, departamento, pais, barrio];
     var payment_inpunts = [cc_name, cc_expiration, cc_number, cc_cvv];
@@ -284,24 +282,67 @@ function checkValidation() {
 
     /// Si el método de pago es crédito o débito, que los campos de tarjeta sean obligatorios
     if (payment_method === "credit" || payment_method ==="debit") {
-        array_inputs = array_inputs.concat(payment_inpunts);
+        array_inputs = array_inputs.concat(payment_inpunts);  // Reescribo el array, para que tome los campos del metodo de pago
     } else {
         for (let i = 0; i < payment_inpunts.length; i++)
         payment_inpunts[i].className = "form-control";      /// En caso de cambiar a paypal, sacar recuadro a campos
     }
     
-    for (let i = 0; i < array_inputs.length; i++) {        ///
+    for (let i = 0; i < array_inputs.length; i++) {        /// Cambiar los recuadros de los campos en caso de tener o no valor
     let input = array_inputs[i]
 
     if (input.value.trim() === '') {
-        input.className = "form-control input_error";
-        validity = 0
+        input.className = "form-control input_error";   // Cambio de clase en campos obligatorios vacios
+        validity = 0                                    // Si hay algun campo vacío, que cambie el valor de validity
     } else {
-        input.className = "form-control input_success";
+        input.className = "form-control input_success"; // Cambio de clase en campos obligatorios completos
     }
 
 }
-if (validity === 0) {
+if (validity === 0) {                                       // Si falta algún campo, avisar con alerta
     alert("Por favor, rellene los campos marcados en rojo")
+} else {
+    /// Guardo en información de costos y envío
+    var subtotal_checkOut = document.getElementById("precioSubtotal").innerHTML;
+    var precioEnvio_checkOut = document.getElementById("precioEnvio").innerHTML;
+    var total_checkOut = document.getElementById("precioTotal").innerHTML;
+    var shipping_checkOut = (precioEnvio()*100).toFixed(0)
+    localStorage.setItem("subtotal_checkOut", subtotal_checkOut); 
+    localStorage.setItem("precioEnvio_checkOut", precioEnvio_checkOut)
+    localStorage.setItem("total_checkOut", total_checkOut);
+    localStorage.setItem("shipping_checkOut", shipping_checkOut)
+
+    // Guardo información de artículos
+    var articles_array = [];
+    var articles_objets = [];
+    for (let i = 0; i < cart_products_info.articles.length; i++) 
+      {
+        let unitCost_checkout = document.getElementById("cart_"+i+"_cost").innerHTML
+        let name_checkout =   document.getElementById("cart_"+i+"_name").innerHTML
+        let subtotal_checkout = document.getElementById("cart_"+i+"_cost").innerHTML
+        let count_checkout =    document.getElementById("cart_"+i+"_units").value
+
+        var articles = {name: name_checkout, unitCost: unitCost_checkout, count: count_checkout , subtotal: subtotal_checkout}
+        articles_objets.push(articles);
+      }
+
+        articles_array = [JSON.stringify(articles_objets)];  // Transformo objeto en string
+        localStorage.setItem("articles_array_checkout", articles_array); // Guardo info de artículos
+
+
+    // Guardo información de método de pago
+        if (payment_method === "credit" || payment_method ==="debit") {
+            localStorage.setItem("have_card", "yes");
+            var payment_inpunts_values = []
+            for (let i = 0; i < payment_inpunts.length; i++) {
+                payment_inpunts_values.push(payment_inpunts[i].value)  // Tomo los valores de cada input
+            }
+            localStorage.setItem("payment_method_info", JSON.stringify(payment_inpunts_values))
+            alert(localStorage.getItem("payment_method_info"))
+
+        } else {localStorage.removeItem("have_card")}
+
+    //
+        window.location.href = "cart-checkout-info.html"; // Redirigir a página de info de compra
 }
 }
