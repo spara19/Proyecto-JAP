@@ -207,9 +207,6 @@ function saveAdress() {
     var departamento = document.getElementById("departamento_ID").value;
     var pais = document.getElementById("pais_ID").value;
     var barrio = document.getElementById("barrio_ID").value;
-
-    var saveAdress_control = 1
-    localStorage.setItem("saveAdress_control", saveAdress_control)
     
     localStorage.setItem("calle", calle);
     localStorage.setItem("esquina", esquina);
@@ -218,9 +215,15 @@ function saveAdress() {
     localStorage.setItem("pais", pais);
     localStorage.setItem("barrio", barrio);
 
-    alert(localStorage.getItem("calle"));
-    alert(localStorage.getItem("saveAdress_control"));
     
+}
+
+function saveAdress_control() {
+
+    saveAdress()
+    var saveAdress_control = 1
+    localStorage.setItem("saveAdress_control", saveAdress_control)
+
 }
 
 function load_savedAdress() {
@@ -302,6 +305,8 @@ function checkValidation() {
 if (validity === 0) {                                       // Si falta algún campo, avisar con alerta
     alert("Por favor, rellene los campos marcados en rojo")
 } else {
+    // Guardo información de dirección
+    saveAdress()
     /// Guardo en información de costos y envío
     var subtotal_checkOut = document.getElementById("precioSubtotal").innerHTML;
     var precioEnvio_checkOut = document.getElementById("precioEnvio").innerHTML;
@@ -338,11 +343,11 @@ if (validity === 0) {                                       // Si falta algún c
                 payment_inpunts_values.push(payment_inpunts[i].value)  // Tomo los valores de cada input
             }
             localStorage.setItem("payment_method_info", JSON.stringify(payment_inpunts_values))
-            alert(localStorage.getItem("payment_method_info"))
 
         } else {localStorage.removeItem("have_card")}
 
     //
+    
         window.location.href = "cart-checkout-info.html"; // Redirigir a página de info de compra
 }
 }

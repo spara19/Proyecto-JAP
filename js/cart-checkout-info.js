@@ -17,8 +17,7 @@ function showcheckoutInfo() {
     let htmlCheckOutProdcutsInfoToAppend = "";
     let htmlPaymentMethodInfoToAppend = "";
     var checkout_products = JSON.parse(localStorage.getItem("articles_array_checkout"));
-    var checkout_paymente_info = JSON.parse(localStorage.getItem("payment_method_info"));
-    alert(checkout_paymente_info);
+    var checkout_paymente_info = JSON.parse(localStorage.getItem("payment_method_info"));;
 ////
     for(let i = 0; i < checkout_products.length; i++){
 
