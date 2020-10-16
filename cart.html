@@ -139,61 +139,113 @@
   </div>
   <br>
   <hr>
-  <div>
-    <h3 class="mb-3">Forma de pago</h3>
-    <!---->
+  <div id="forma_de_pago"> 
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#paymentModal" id="paymentModal_button" onclick="setReadonlyInputs()">
+  Forma de pago
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalTitle">Elija la forma de pago</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <!-- Modal-Info -->
   <form class="needs-validation" novalidate></form>
-    <div class="d-block my-3">
-      <div class="custom-control custom-radio">
-        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="credit" checked required>
-        <label class="custom-control-label" for="credit">Tarjeta de crédito</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" value="debit" required>
-        <label class="custom-control-label" for="debit">Tarjeta de débito</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" required>
-        <label class="custom-control-label" for="paypal">Paypal</label>
+  <div class="d-block my-3">
+    <div class="custom-control custom-radio">
+      <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="credit" onclick="change_transfer_inputs('block'); change_card_inputs('unblock');" checked required >
+      <label class="custom-control-label" for="credit">Tarjeta de crédito</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" value="debit" onclick="change_transfer_inputs('block'); change_card_inputs('unblock');" required>
+      <label class="custom-control-label" for="debit">Tarjeta de débito</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="bank_transfer" name="paymentMethod" type="radio" class="custom-control-input" value="transfer" onclick="change_card_inputs('block'); change_transfer_inputs('unblock')" required>
+      <label class="custom-control-label" for="bank_transfer">Transferencia bancaria</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal" onclick="change_card_inputs('block'); change_transfer_inputs('block');" required>
+      <label class="custom-control-label" for="paypal">Paypal</label>
+    </div>
+  </div>
+       <!-- Div TARJETAS -->
+  <div id="card_info_form">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="cc-name">Nombre en tarjeta</label>
+      <input type="text" class="form-control" id="cc-name" placeholder="" required>
+      <small class="text-muted">Nombre completo como aparece en la tarjeta</small>
+      <div class="invalid-feedback">
+        Name on card is required
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label for="cc-name">Nombre en tarjeta</label>
-        <input type="text" class="form-control" id="cc-name" placeholder="" required>
-        <small class="text-muted">Nombre completo como aparece en la tarjeta</small>
-        <div class="invalid-feedback">
-          Name on card is required
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label for="cc-number">Número de tarjeta</label>
-        <input type="text" class="form-control" id="cc-number" placeholder="" required>
-        <div class="invalid-feedback">
-          Credit card number is required
-        </div>
+    <div class="col-md-6 mb-3">
+      <label for="cc-number">Número de tarjeta</label>
+      <input type="text" class="form-control" id="cc-number" placeholder="" required>
+      <div class="invalid-feedback">
+        Credit card number is required
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3 mb-3">
-        <label for="cc-expiration">Vencimiento</label>
-        <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-        <div class="invalid-feedback">
-          Expiration date required
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="cc-cvv">CVV</label>
-        <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-        <div class="invalid-feedback">
-          Security code required
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <label for="cc-expiration">Vencimiento</label>
+      <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+      <div class="invalid-feedback">
+        Expiration date required
       </div>
     </div>
-    <hr class="mb-4">
-    <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitCart" onclick="checkValidation()">Continue to checkout</button>
-  </form>
+    <div class="col-md-3 mb-3">
+      <label for="cc-cvv">CVV</label>
+      <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+      <div class="invalid-feedback">
+        Security code required
+      </div>
+    </div>
+  </div>
 </div>
+      <!-- Div TARJETAS FIN -->
+ <hr>
+      <!-- Div TRASNFERENCIA info-->
+ <div id="transfer_info_form">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="cc-expiration">Número de cuenta</label>
+      <input type="text" class="form-control" id="bank_number" placeholder="" readonly required>
+    </div>
+  </div>   
+ </div>
+      <!-- Div TRASNFERENCIA info FIN-->
+
+</form>
+<!-- Modal-Info End -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="savePaymentModal" onclick="checkPaymenteValidation();">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
+
+</div>
+
+<!-- Donde se agregar forma de pago elegida -->
+<div id="forma_pago_elegida">
+
+</div>
+<!-- -->
+<hr class="mb-4">
+<button class="btn btn-primary btn-lg btn-block" type="submit" id="submitCart" onclick="checkGlobalValidation()">Continue to checkout</button>
 </div>
 
     <!---->

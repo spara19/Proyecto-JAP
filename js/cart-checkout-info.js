@@ -35,18 +35,24 @@ function showcheckoutInfo() {
     }
 ////
 
-  if (localStorage.getItem("have_card") === "yes") {
+  if (localStorage.getItem("payment_method_selected") === "card") {
     
     htmlPaymentMethodInfoToAppend = `
+    <div>Tarjeta:</div>
     <div>Tarjeta: ${checkout_paymente_info[2]}</div>
     <div>Venc.: ${checkout_paymente_info[1]} </div>
     <div>Nombre: ${checkout_paymente_info[0]}</div> `
   }
-    else {
+    else if (localStorage.getItem("payment_method_selected") === "paypal")  {
       htmlPaymentMethodInfoToAppend = `
       <div>PAYPAL</div>
- `
-    }
+      `
+  } else if (localStorage.getItem("payment_method_selected") === "transfer") {
+      htmlPaymentMethodInfoToAppend = `
+      <div>Transferencia:</div>
+      <div>Nro de cuenta: ${checkout_paymente_info[0]}</div>
+      `
+  }
 
 ////
 
