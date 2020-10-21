@@ -319,3 +319,12 @@ font-weight: normal;
   border-radius: 4px;
   visibility: visible;
 }
+
+.payment_hide_inputs {
+  opacity:0.5;
+}
+
+.payment_print_image {
+  width: 120px;
+  height: 94px;
+}

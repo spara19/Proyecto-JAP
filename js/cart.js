@@ -252,11 +252,27 @@ let write_payment_method = "false"
 function printPaymentMethod(action) {
     if (write_payment_method === "false" && action === "add") {
     
-        write_payment_method = "true"
+        write_payment_method = "true";
+        let method = paymentMethod();
+        if (method === "credit"){
+            var name = "Tarjeta"
+        } else if (method === "debit") {
+            var name = "Débito"
+            clase = "payment_print_image"
+        } else if (method === "transfer") {
+            var name = "Transferencia"
+            var clase = "payment_print_image"
+        } else if (method === "paypal") {
+            var name = "Paypal"
+            var clase = "payment_print_image"
+        }
         document.getElementById("forma_pago_elegida").innerHTML = 
         `
-        <div> ${paymentMethod()} </div>
+        <div> ${name}
+        <div> <img class="${clase}" src="img/${method}_icon.png" alt=""> </div>
+        </div>             
         `
+         /// Cambia el nombre de la imagen que busca, dependiendo del método elegido
         write_payment_method = "false"
     }
     else if (action === "delete") {
@@ -439,10 +455,11 @@ function change_card_inputs(action) {
         if (action === "block") { 
             childIDs[i].readOnly = true;                // "Blockea" los input elegidos
             childIDs[i].className = "form-control"      /// Saca el recuadro rojo o verde de la validación 
-            // parentID.style.backgroundColor = "lightgray"
+            parentID.className = "payment_hide_inputs";
         }
         else if (action === "unblock") {
             childIDs[i].readOnly = false;
+            parentID.classList.remove("payment_hide_inputs");
         }
     }
 }
@@ -454,9 +471,11 @@ function change_transfer_inputs(action) {
         if (action === "block") { 
             childIDs[i].readOnly = true;
             childIDs[i].className = "form-control"
+            parentID.className = "payment_hide_inputs"
         }
         else if (action === "unblock") {
             childIDs[i].readOnly = false;
+            parentID.classList.remove("payment_hide_inputs");
         }
     }
 }
