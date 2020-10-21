@@ -256,6 +256,7 @@ function printPaymentMethod(action) {
         let method = paymentMethod();
         if (method === "credit"){
             var name = "Tarjeta"
+            clase = ""
         } else if (method === "debit") {
             var name = "Débito"
             clase = "payment_print_image"
