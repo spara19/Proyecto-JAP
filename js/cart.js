@@ -83,6 +83,18 @@ document.addEventListener("DOMContentLoaded", function(e){
     })
 }); 
 
+document.addEventListener("DOMContentLoaded", function(e){
+    getJSONData(CART_BUY_URL).then(function(resultObj){
+        if (resultObj.status === "ok") 
+        {
+            buy_success_msg = resultObj.data
+
+        }
+    })
+}); 
+
+
+
 /////////////////////////////////////////////////////////////////////////
 
 //// Funcion que modifica el precio subtotal dependiendo de cantidad de productos, de cada producto ////
@@ -182,6 +194,7 @@ onload = function() {
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
+//// Guardar, resetear y cargar información de dirección ////////////////////////////
 
 function saveAdress() {
     var calle = document.getElementById("calle_ID").value;
@@ -248,6 +261,7 @@ for(var i = 0; i < values.length; i++) {
  return selectedValue;
 }
 /////////////////////////////////////////////
+//// Mostrar método de pago elegido ////////
 let write_payment_method = "false"
 function printPaymentMethod(action) {
     if (write_payment_method === "false" && action === "add") {
@@ -255,30 +269,29 @@ function printPaymentMethod(action) {
         write_payment_method = "true";
         let method = paymentMethod();
         if (method === "credit"){
-            var name = "Tarjeta"
+            var name = "Tarjeta de crédito"  // Guarda el nombre del método de pago.
             clase = ""
         } else if (method === "debit") {
-            var name = "Débito"
-            clase = "payment_print_image"
+            var name = "Tarjeta de débito"
+            method = "credit"  // Misma imagen para crédito o débito.
         } else if (method === "transfer") {
-            var name = "Transferencia"
-            var clase = "payment_print_image"
+            var name = "Transferencia bancaria"
+            var clase = "payment_print_image p-2"
         } else if (method === "paypal") {
             var name = "Paypal"
-            var clase = "payment_print_image"
+            var clase = "payment_print_image p-2"
         }
         document.getElementById("forma_pago_elegida").innerHTML = 
         `
-        <div> ${name}
-        <div> <img class="${clase}" src="img/${method}_icon.png" alt=""> </div>
+        <div>
+        <div> <img class="${clase}" src="img/${method}_icon.png" alt=""><small><i>${name}</i></small> </div> 
         </div>             
         `
-         /// Cambia el nombre de la imagen que busca, dependiendo del método elegido
         write_payment_method = "false"
     }
     else if (action === "delete") {
         document.getElementById("forma_pago_elegida").innerHTML = 
-        ``
+        `<div class="w3-text-red p-2"> <b> Elija un método de pago válido </b> </div>`
     }
 }
 ////////////////////////////////////////////////////////
@@ -362,6 +375,8 @@ function checkAdressValidation(){
     }
     window.adress_validation = local_validation
 }
+
+//// Verificar que todos los campos estén llenos y guardar información en caso afirmativo ////
 function checkGlobalValidation() {
     if (window.payment_validation === 0) {
         alert("Por favor, elija un método de pago")
@@ -387,15 +402,15 @@ function checkGlobalValidation() {
         // Guardo información de artículos
         var articles_array = [];
         var articles_objets = [];
-        for (let i = 0; i < cart_products_info.articles.length; i++) 
+        for (let i = 0; i < cart_products_info.articles.length; i++)                        /// REVISAR ACA PARA QUE TOME LISTA DE ARITCULOS NUEVOS (AL QUITAR UN ARTICULO)
         {
             let unitCost_checkout = document.getElementById("cart_"+i+"_cost").innerHTML
             let name_checkout =   document.getElementById("cart_"+i+"_name").innerHTML
             let subtotal_checkout = document.getElementById("cart_"+i+"_cost").innerHTML
             let count_checkout =    document.getElementById("cart_"+i+"_units").value
 
-            var articles = {name: name_checkout, unitCost: unitCost_checkout, count: count_checkout , subtotal: subtotal_checkout}
-            articles_objets.push(articles);
+            var articles = {name: name_checkout, unitCost: unitCost_checkout, count: count_checkout , subtotal: subtotal_checkout} // Objeto con datos de articulo 
+            articles_objets.push(articles);  // Lista de objetos
         }
 
             articles_array = [JSON.stringify(articles_objets)];  // Transformo objeto en string
@@ -404,8 +419,8 @@ function checkGlobalValidation() {
 
         // Guardo información de método de pago
         payment_method = paymentMethod();
-            if (payment_method === "credit" || payment_method ==="debit") {
-                localStorage.setItem("payment_method_selected", "card");
+            if (payment_method === "credit" || payment_method === "debit") {
+                localStorage.setItem("payment_method_selected", payment_method);
                 var payment_inpunts_values = []
                 for (let i = 0; i < window.card_payment_inpunts.length; i++) {
                     payment_inpunts_values.push(window.card_payment_inpunts[i].value)  // Tomo los valores de cada input
@@ -415,39 +430,24 @@ function checkGlobalValidation() {
             } else if (payment_method === "transfer") {
                 let payment_inpunts_values = document.getElementById("bank_number").value;
                 localStorage.setItem("payment_method_info", JSON.stringify(payment_inpunts_values));
-                localStorage.setItem("payment_method_selected", "transfer")
+                localStorage.setItem("payment_method_selected", payment_method)
             } else if (payment_method === "paypal") {
-                localStorage.setItem("payment_method_selected", "paypal")
+                localStorage.setItem("payment_method_selected", payment_method)
             }
 
         //
-        alert("¡Gracias por su compra!")
-        setTimeout( goToCheckOut, 3000); // Redirigir con 3 seg de delay
+        alert(buy_success_msg.msg)
+        setTimeout( goToCheckOut, 1000); // Redirigir con 1 seg de delay
         }
 }
+
+/// Función para redirigir a página de checkout
 
 function goToCheckOut() {
     window.location.href = "cart-checkout-info.html"; // Redirigir a página de info de compra
 }
 
-/*
-//////////////////////
-////// OPCION 1 //////
-//// Ocultar DIVS ////
-function prove() {
-        var x = document.getElementById("card_info_form");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
 
-}
-///////////////////////////
-*/
-
-//////////////////////
-////// OPCION 2 //////
 /// Anular los DIVS //
 function change_card_inputs(action) {
     parentID = document.getElementById("card_info_form"); // Agarra una ID
@@ -460,6 +460,7 @@ function change_card_inputs(action) {
         }
         else if (action === "unblock") {
             childIDs[i].readOnly = false;
+            childIDs[i].classList.add("input_required")
             parentID.classList.remove("payment_hide_inputs");
         }
     }
@@ -476,6 +477,7 @@ function change_transfer_inputs(action) {
         }
         else if (action === "unblock") {
             childIDs[i].readOnly = false;
+            childIDs[i].classList.add("input_required")
             parentID.classList.remove("payment_hide_inputs");
         }
     }

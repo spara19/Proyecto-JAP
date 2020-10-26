@@ -35,21 +35,28 @@ function showcheckoutInfo() {
     }
 ////
 
-  if (localStorage.getItem("payment_method_selected") === "card") {
+// Información de método de pago.
+  let payment_method = localStorage.getItem("payment_method_selected")
+  if (payment_method === "debit" || payment_method === "credit") {
+    if (payment_method === "debit") {
+      payment_method_name = "(Débito)"
+    } else {
+      payment_method_name = "(Crédito)"
+    }
     
     htmlPaymentMethodInfoToAppend = `
-    <div>Tarjeta:</div>
     <div>Tarjeta: ${checkout_paymente_info[2]}</div>
     <div>Venc.: ${checkout_paymente_info[1]} </div>
     <div>Nombre: ${checkout_paymente_info[0]}</div> `
   }
-    else if (localStorage.getItem("payment_method_selected") === "paypal")  {
+    else if (payment_method === "paypal")  {
+      payment_method_name = ""
       htmlPaymentMethodInfoToAppend = `
       <div>PAYPAL</div>
       `
-  } else if (localStorage.getItem("payment_method_selected") === "transfer") {
+  } else if (payment_method === "transfer") {
+      payment_method_name = "(Transferencia)"
       htmlPaymentMethodInfoToAppend = `
-      <div>Transferencia:</div>
       <div>Nro de cuenta: ${checkout_paymente_info[0]}</div>
       `
   }
@@ -81,7 +88,7 @@ function showcheckoutInfo() {
       
       <div class="col-sm-6">
       <div>
-      <strong>Forma de pago:</strong>
+      <strong>Forma de pago ${payment_method_name}:</strong>
       </div>
         ${htmlPaymentMethodInfoToAppend}
       </div>

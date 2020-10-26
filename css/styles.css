@@ -320,11 +320,17 @@ font-weight: normal;
   visibility: visible;
 }
 
+.input_required {
+  border: 2px solid lightblue;
+  border-radius: 4px;
+  visibility: visible;
+}
+
 .payment_hide_inputs {
   opacity:0.5;
 }
 
 .payment_print_image {
   width: 120px;
-  height: 94px;
+  height: 65px;
 }
