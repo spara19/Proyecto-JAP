@@ -39,10 +39,10 @@ function getModalIDS() { // Toma el nodo de IDs del modal (son todos inputs)
 
 function getModalInputsValues() { // Toma el valor de cada input del modal
     childIDs = getModalIDS()
-    var inputs_values = []    
+    var inputs_values = [];    
     for (var i = 0, len = childIDs.length; i < len; ++i) {
-        let input = childIDs[i].value
-        inputs_values.push(input)     
+        let input = childIDs[i].value;
+        inputs_values.push(input);     
     }
     return inputs_values
 }
@@ -86,6 +86,7 @@ function showProfileInfo() {      // Sobreescribe los div donde se muestra info 
     profile_inputs[3].innerHTML = new_profile_info.email;
     profile_inputs[4].innerHTML = new_profile_info.age;
 
+    document.getElementById("profile_full_name").innerHTML =  new_profile_info.first_name + " " +  new_profile_info.first_surname
     
 }
 
@@ -106,3 +107,43 @@ function loadActualProfile() {   // Hace que al abrir el modal, los inputs por d
     } 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+
+// Subir imagenes //
+
+function getImgUploadMethod() {     // Obtiene el radio elegido
+    
+    var values = document.getElementsByName("imgUploadMethod");
+    let selectedValue = ""
+    for(var i = 0; i < values.length; i++) {
+       if(values[i].checked == true) {
+           selectedValue = values[i];
+       }
+     }
+    return selectedValue.value;
+}
+
+
+function hideShowImageUploadOptions() {     // Muestra la opcion elegido, oculta la opuesta.
+
+    let method_url = document.getElementById("div_profile_img_url");
+    let method_upload = document.getElementById("div_profile_img_upload")
+    var method = getImgUploadMethod();
+    if (method === "upload") {
+        method_upload.style.display = "block";
+        method_url.style.display = "none";
+    } else if (method === "url") {
+        method_upload.style.display = "none";
+        method_url.style.display = "block";
+    }
+}
+
+
+function getuploadImage() {
+
+    method = getImgUploadMethod();
+    let img = document.getElementById("profile_img_"+method);
+    let profile_image = document.getElementById("img_profile");
+    profile_image.src = img.value;
+    alert(img.value)
+}

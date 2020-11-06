@@ -334,3 +334,8 @@ font-weight: normal;
   width: 120px;
   height: 65px;
 }
+
+.border_products_title {
+  border: 2px solid #ccc;
+  background-color: AliceBlue;
+}

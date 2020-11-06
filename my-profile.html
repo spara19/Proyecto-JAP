@@ -57,14 +57,14 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                      <img src="" alt="Admin" class="rounded-circle" width="150">
+                      <a href="https://i.ibb.co/BrmKZCr/Unaporongus.png"><img id="img_profile" src="https://i.ibb.co/mXmFqcX/Unaporongus.png" class="rounded-circle" width="150" alt="Unaporongus"></a>
                       <div class="mt-3">
-                        <h4>John Doe</h4>
+                        <h4 id="profile_full_name">Name</h4>
                         <p class="text-secondary mb-1">Full Stack Developer</p>
                         <p class="text-muted font-size-sm">DEPARTAMENTO, PAIS</p>
                         <button class="btn btn-primary">Follow</button>
-                        <button class="btn btn-outline-primary">Message</button>
-                      </div>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#editProfileImageModal" id="editProfileImageModal_button">Subir Imágen</button>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="row gutters-sm">
                   <div class="col-sm-6 mb-3">
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editProfileModal" id="editProfileModal_button" onclick="loadActualProfile();">
+                    <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#editProfileModal" id="editProfileModal_button" onclick="loadActualProfile();">
                       Editar Perfil
                     </button>
                   </div>
@@ -154,7 +154,7 @@
     <!---->
   </div>
   <!---->
-  <!-- Modal -->
+  <!-- Modal user info -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -218,7 +218,57 @@
     </div>
   </div>
 </div>
-<!-- Modal End -->
+<!-- Modal END -->
+<!-- Modal Upload Img-->
+<div class="modal fade" id="editProfileImageModal" tabindex="-1" role="dialog" aria-labelledby="editProfileImageModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileImageModalTitle">Subir Imágen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <!-- Modal-Info -->
+  <form class="needs-validation" novalidate></form>
+  <div class="d-block my-3" id="upload_img_radio">
+    <div class="custom-control custom-radio">
+      <input id="profile_img_upload_radio" name="imgUploadMethod" type="radio" class="custom-control-input" value="upload" onclick="hideShowImageUploadOptions();">
+      <label class="custom-control-label" for="profile_img_upload_radio">Subir imágen</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input id="profile_img_url_radio" name="imgUploadMethod" type="radio" class="custom-control-input" value="url" onclick="hideShowImageUploadOptions();">
+      <label class="custom-control-label" for="profile_img_url_radio">Usar URL externo</label>
+    </div>
+  </div>
+       <!-- Div IMG -->
+  <div id="new-profile-img-form">
+  <div class="row">
+    <div class="col-md-6 mb-3" id="div_profile_img_upload" style="display: none;">
+      <label for="img">Subir Imágen:</label>
+      <input type="file" id="profile_img_upload" name="profile_img" accept="image/*">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3" id="div_profile_img_url" style="display: none;">
+      <label for="img">URL:</label>
+      <input type="text" id="profile_img_url" class="form-control input_required" name="profile_img" accept="image/*">
+    </div>
+  </div>
+</div>
+      <!-- Div PERFILL FIN -->
+</form>
+<!-- Modal-Info End -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveNewProfileImagetModal" onclick="getuploadImage()">Ready</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal END-->
   <footer class="text-muted bg-light">
     <div class="container">
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>

@@ -52,21 +52,23 @@ function showproductsList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
 
                 htmlContentToAppend += `
-                <a href="product-info.html" class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="` + product.imgSrc + `" alt="` + product.desc + `" class="img-thumbnail">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">`+ product.name +`</h4>
-                                <small class="text-muted">` + product.soldCount + ` artículos</small>
-                            </div>
-                                <p>${product.description} <br><br></p> <br>
-                                <p style="text-align:right;"> ${product.currency} ${product.cost}</p>
-                        </div>
+                <div class="col-md-4">
+                <a href="product-info.html" class="list-group-item-action">
+                <h4 class="text-center p-1 border_products_title font-weight-bold"> ${product.name} </h4> 
+                <div class="card mb-4 shadow-sm">
+                  <img src="${product.imgSrc}" alt="${product.desc}" class="bd-placeholder-img card-img-top img-thumbnail"<rect width="100%" height="100%" fill="#55595c"/></>
+                  <div class="card-body">
+                    <p class="card-text">${product.description}.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group font-weight-bold">
+                        ${product.currency} ${product.cost}
+                      </div>
+                      <small class="text-muted">${product.soldCount} artículos vendidos</small>
                     </div>
+                  </div>
+                </div> 
                 </a>
+              </div>
                 `
         }
 
